@@ -5,19 +5,19 @@ namespace TeamCityBackupTask
     public class HttpRestBackupRequest : BackupRequest 
     {
         private readonly BackupSettings _backupSettings;
-        private readonly HttpGetBackupRequest _httpGetBackupRequest;
+        private readonly HttpBackupRequest _httpBackupRequest;
 
-        public HttpRestBackupRequest(BackupSettings backupSettings, HttpGetBackupRequest httpGetBackupRequest)
+        public HttpRestBackupRequest(BackupSettings backupSettings, HttpBackupRequest httpBackupRequest)
         {
             _backupSettings = backupSettings;
-            _httpGetBackupRequest = httpGetBackupRequest;
+            _httpBackupRequest = httpBackupRequest;
         }
 
         public void RequestBackup()
         {
             try
             {
-                _httpGetBackupRequest.Get(_backupSettings.BackupRequestUri);
+                _httpBackupRequest.Request(_backupSettings.BackupRequestUri);
             }
             catch (Exception exception)
             {
