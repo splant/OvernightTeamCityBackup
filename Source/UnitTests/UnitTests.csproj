@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="BackupControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidatedBackupProcessTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TeamCityBackupTask\TeamCityBackupTask.csproj">

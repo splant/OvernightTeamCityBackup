@@ -41,8 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackupController.cs" />
+    <Compile Include="BackupFailed.cs" />
+    <Compile Include="BackupNotifier.cs" />
+    <Compile Include="BackupProcess.cs" />
+    <Compile Include="BackupRequest.cs" />
+    <Compile Include="BackupStorage.cs" />
+    <Compile Include="BackupValidationRecord.cs" />
+    <Compile Include="BackupValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StorageFailed.cs" />
+    <Compile Include="ValidatedBackupProcess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

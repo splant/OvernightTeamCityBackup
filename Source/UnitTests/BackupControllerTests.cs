@@ -1,6 +1,6 @@
-﻿using System;
-using FakeItEasy;
+﻿using FakeItEasy;
 using NUnit.Framework;
+using TeamCityBackupTask;
 
 namespace UnitTests
 {
@@ -55,7 +55,7 @@ namespace UnitTests
     }
 
     [TestFixture]
-    public class If_a_backup_fails : BackupControllerTestBase
+    public class Given_a_backup_fails : BackupControllerTestBase
     {
         [Test]
         public void A_notification_is_sent()
@@ -90,7 +90,7 @@ namespace UnitTests
     }
 
     [TestFixture]
-    public class If_backup_storage_fails : BackupControllerTestBase
+    public class Given_backup_storage_fails : BackupControllerTestBase
     {
         [Test]
         public void A_notification_is_sent()
@@ -111,7 +111,7 @@ namespace UnitTests
     }
 
     [TestFixture]
-    public class If_backup_successful : BackupControllerTestBase
+    public class Given_backup_successful : BackupControllerTestBase
     {
         [Test]
         public void A_notification_is_sent()
@@ -125,16 +125,6 @@ namespace UnitTests
             //Then:
             A.CallTo(() => _backupNotifier.SendNotification("Backup was a success")).MustHaveHappened();
         }
-    }
-
-    public class StorageFailed : Exception
-    {
-        public StorageFailed(string failureMessage) : base(failureMessage) {}
-    }
-
-    public class BackupFailed : Exception 
-    {
-        public BackupFailed(string failureMessage) : base(failureMessage) {}
     }
 
     public abstract class BackupControllerTestBase
@@ -154,59 +144,6 @@ namespace UnitTests
         public BackupController GetSUT()
         {
             return new BackupController(_backupProcess, _backupStorage, _backupNotifier);
-        }
-    }
-
-    public interface BackupNotifier 
-    {
-        void SendNotification(string message);
-    }
-
-    public interface BackupStorage
-    {
-        void StoreBackup();
-    }
-
-    public interface BackupProcess 
-    {
-        void ExecuteBackup();
-    }
-
-    public class BackupController 
-    {
-        private readonly BackupProcess _backupProcess;
-        private readonly BackupStorage _backupStorage;
-        private readonly BackupNotifier _backupNotifier;
-
-        public BackupController(
-            BackupProcess backupProcess, BackupStorage backupStorage, BackupNotifier backupNotifier)
-        {
-            _backupProcess = backupProcess;
-            _backupStorage = backupStorage;
-            _backupNotifier = backupNotifier;
-        }
-
-        public void Backup()
-        {
-            try
-            {
-                DoBackup();
-            }
-            catch (BackupFailed backupFailedException)
-            {
-                _backupNotifier.SendNotification("Backup failed: " + backupFailedException.Message);
-            }
-            catch (StorageFailed storageFailedException)
-            {
-                _backupNotifier.SendNotification("Backup storage failed: " + storageFailedException.Message);
-            }
-        }
-
-        private void DoBackup()
-        {
-            _backupProcess.ExecuteBackup();
-            _backupStorage.StoreBackup();
-            _backupNotifier.SendNotification("Backup was a success");
         }
     }
 }
