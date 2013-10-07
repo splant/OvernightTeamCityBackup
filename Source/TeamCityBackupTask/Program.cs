@@ -12,13 +12,22 @@ namespace TeamCityBackupTask
         {
             HttpRestBackupRequest httpRestBackupRequest = new HttpRestBackupRequest
             (
-                new BackupSettings { BackupRequestUri = ConfigurationManager.AppSettings["BackupRequestUri"] }, 
+                new BackupSettings
+                    {
+                        BackupRequestUri = GetAppSetting("BackupRequestUri"),
+
+                    }, 
                 new RestClientBackupRequest()
             );
 
             httpRestBackupRequest.RequestBackup();
 
             Console.ReadKey();
+        }
+
+        private static string GetAppSetting(string appSettingName)
+        {
+            return ConfigurationManager.AppSettings[appSettingName];
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface HttpBackupRequest 
     {
-        void Request(string backupRequestUri);
+        void Request(BackupSettings backupSettings);
     }
 }

@@ -17,7 +17,7 @@ namespace TeamCityBackupTask
         {
             try
             {
-                _httpBackupRequest.Request(_backupSettings.BackupRequestUri);
+                _httpBackupRequest.Request(_backupSettings);
             }
             catch (Exception exception)
             {
