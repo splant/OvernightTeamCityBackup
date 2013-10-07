@@ -10,17 +10,17 @@ namespace TeamCityBackupTask
     {
         static void Main(string[] args)
         {
-            HttpRestBackupRequest httpRestBackupRequest = new HttpRestBackupRequest
+            HandledBackupRequest handledBackupRequest = new HandledBackupRequest
             (
                 new BackupSettings
                     {
                         BackupRequestUri = GetAppSetting("BackupRequestUri"),
 
                     }, 
-                new RestClientBackupRequest()
+                new RestfulPostBackupRequest()
             );
 
-            httpRestBackupRequest.RequestBackup();
+            handledBackupRequest.RequestBackup();
 
             Console.ReadKey();
         }

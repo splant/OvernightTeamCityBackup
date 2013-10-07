@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TeamCityBackupTask
 {
-    public class RestClientBackupRequest : HttpBackupRequest 
+    public class RestfulPostBackupRequest : HttpBackupRequest 
     {
         public void Request(BackupSettings backupSettings)
         {
@@ -18,12 +18,7 @@ namespace TeamCityBackupTask
             AddBasicAuthorizationHeader(backupSettings, message);
 
             var client = new HttpClient();
-            client.SendAsync(message).ContinueWith(task =>
-                {
-                    task.Result.EnsureSuccessStatusCode();
-
-                    var jsonHypermediaResult = task.Result.Content.ReadAsStringAsync();
-                });	
+            client.SendAsync(message).ContinueWith(task => { task.Result.EnsureSuccessStatusCode(); });	
         }
 
         private void AddBasicAuthorizationHeader(BackupSettings backupSettings, HttpRequestMessage message)

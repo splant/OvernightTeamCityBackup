@@ -2,12 +2,12 @@
 
 namespace TeamCityBackupTask
 {
-    public class HttpRestBackupRequest : BackupRequest 
+    public class HandledBackupRequest : BackupRequest 
     {
         private readonly BackupSettings _backupSettings;
         private readonly HttpBackupRequest _httpBackupRequest;
 
-        public HttpRestBackupRequest(BackupSettings backupSettings, HttpBackupRequest httpBackupRequest)
+        public HandledBackupRequest(BackupSettings backupSettings, HttpBackupRequest httpBackupRequest)
         {
             _backupSettings = backupSettings;
             _httpBackupRequest = httpBackupRequest;
