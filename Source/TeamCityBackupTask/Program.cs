@@ -10,17 +10,21 @@ namespace TeamCityBackupTask
     {
         static void Main(string[] args)
         {
-            HandledBackupRequest handledBackupRequest = new HandledBackupRequest
-            (
-                new BackupSettings
-                    {
-                        BackupRequestUri = GetAppSetting("BackupRequestUri"),
+             //how to know if the status is definitely invalid?
 
-                    }, 
-                new RestfulPostBackupRequest()
-            );
 
-            handledBackupRequest.RequestBackup();
+
+//            HandledBackupRequest handledBackupRequest = new HandledBackupRequest
+//            (
+//                new BackupSettings
+//                    {
+//                        BackupRequestUri = GetAppSetting("BackupRequestUri"),
+//
+//                    }, 
+//                new RestfulPostBackupRequest()
+//            );
+//
+//            handledBackupRequest.RequestBackup();
 
             Console.ReadKey();
         }
