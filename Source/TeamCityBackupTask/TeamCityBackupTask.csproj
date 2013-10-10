@@ -67,14 +67,15 @@
   <ItemGroup>
     <Compile Include="BackupController.cs" />
     <Compile Include="BackupFailed.cs" />
+    <Compile Include="BackupFinishedValidator.cs" />
     <Compile Include="BackupNotifier.cs" />
     <Compile Include="BackupProcess.cs" />
     <Compile Include="BackupRequest.cs" />
     <Compile Include="BackupSettings.cs" />
+    <Compile Include="BackupStartedValidator.cs" />
     <Compile Include="BackupStorage.cs" />
     <Compile Include="BackupValidationRecord.cs" />
     <Compile Include="BackupValidator.cs" />
-    <Compile Include="BackupFinishedValidator.cs" />
     <Compile Include="HttpBackupRequest.cs" />
     <Compile Include="HandledBackupRequest.cs" />
     <Compile Include="HttpBackupStatus.cs" />

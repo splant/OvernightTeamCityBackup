@@ -11,8 +11,9 @@ namespace TeamCityBackupTask
         static void Main(string[] args)
         {
              //how to know if the status is definitely invalid?
-
-
+            IntervalBackupStatusValidator intervalBackupStatusValidator = 
+                new IntervalBackupStatusValidator("not found", 60, 5, new StubHttpbackupStatus(), new ThreadSleepInterval());
+            intervalBackupStatusValidator.GetBackupValidation();
 
 //            HandledBackupRequest handledBackupRequest = new HandledBackupRequest
 //            (
@@ -32,6 +33,14 @@ namespace TeamCityBackupTask
         private static string GetAppSetting(string appSettingName)
         {
             return ConfigurationManager.AppSettings[appSettingName];
+        }
+    }
+
+    public class StubHttpbackupStatus : HttpBackupStatus
+    {
+        public string GetBackupStatus()
+        {
+            return "Something else";
         }
     }
 }

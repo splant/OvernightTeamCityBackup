@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupControllerTests.cs" />
+    <Compile Include="BackupFinishedValidatorTests.cs" />
+    <Compile Include="BackupStartedValidatorTests.cs" />
     <Compile Include="IntervalBackupStatusValidatorTests.cs" />
     <Compile Include="HttpRestBackupRequestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
