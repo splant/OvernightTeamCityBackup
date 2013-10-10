@@ -12,7 +12,14 @@ namespace TeamCityBackupTask
         {
              //how to know if the status is definitely invalid?
             IntervalBackupStatusValidator intervalBackupStatusValidator = 
-                new IntervalBackupStatusValidator("not found", 60, 5, new StubHttpbackupStatus(), new ThreadSleepInterval());
+                new IntervalBackupStatusValidator("not found", 60, 5, 
+                    new RestfulGetBackupStatus(
+                        new BackupSettings
+                            {
+
+                            }), 
+                    new ThreadSleepInterval());
+
             intervalBackupStatusValidator.GetBackupValidation();
 
 //            HandledBackupRequest handledBackupRequest = new HandledBackupRequest
