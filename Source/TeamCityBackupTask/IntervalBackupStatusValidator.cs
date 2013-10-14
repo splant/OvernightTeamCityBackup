@@ -30,10 +30,10 @@ namespace TeamCityBackupTask
 
             _intervalHandler.WaitInterval(_secondsInterval);
 
-            int adjustedTimeToWait = _secondsToWait - _secondsInterval;
+            int reducedTimeToWait = _secondsToWait - _secondsInterval;
 
             return new IntervalBackupStatusValidator(
-                _requestedStatus, adjustedTimeToWait, _secondsInterval, _httpBackupStatus, _intervalHandler)
+                _requestedStatus, reducedTimeToWait, _secondsInterval, _httpBackupStatus, _intervalHandler)
                 .GetBackupValidation();
         }
     }

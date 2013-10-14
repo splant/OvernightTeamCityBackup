@@ -66,7 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupController.cs" />
+    <Compile Include="BackupExistsValidator.cs" />
     <Compile Include="BackupFailed.cs" />
+    <Compile Include="BackupFileDatesQuery.cs" />
     <Compile Include="BackupFinishedValidator.cs" />
     <Compile Include="BackupNotifier.cs" />
     <Compile Include="BackupProcess.cs" />
@@ -76,6 +78,9 @@
     <Compile Include="BackupStorage.cs" />
     <Compile Include="BackupValidationRecord.cs" />
     <Compile Include="BackupValidator.cs" />
+    <Compile Include="CurrentDateProvider.cs" />
+    <Compile Include="FileSystem.cs" />
+    <Compile Include="FrameworkCurrentDateProvider.cs" />
     <Compile Include="HttpBackupRequest.cs" />
     <Compile Include="HandledBackupRequest.cs" />
     <Compile Include="HttpBackupStatus.cs" />
@@ -88,6 +93,7 @@
     <Compile Include="StorageFailed.cs" />
     <Compile Include="ThreadSleepInterval.cs" />
     <Compile Include="ValidatedBackupProcess.cs" />
+    <Compile Include="WindowsFileSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

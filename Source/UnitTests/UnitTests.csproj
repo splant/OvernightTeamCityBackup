@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupControllerTests.cs" />
+    <Compile Include="BackupExistsValidator.cs" />
     <Compile Include="BackupFinishedValidatorTests.cs" />
     <Compile Include="BackupStartedValidatorTests.cs" />
     <Compile Include="IntervalBackupStatusValidatorTests.cs" />

@@ -10,17 +10,20 @@ namespace TeamCityBackupTask
     {
         static void Main(string[] args)
         {
-             //how to know if the status is definitely invalid?
-            IntervalBackupStatusValidator intervalBackupStatusValidator = 
-                new IntervalBackupStatusValidator("not found", 60, 5, 
-                    new RestfulGetBackupStatus(
-                        new BackupSettings
-                            {
+            WindowsFileSystem windowsFileSystem = new WindowsFileSystem();
+            var list = windowsFileSystem.GetFileNames(@"").ToList();
 
-                            }), 
-                    new ThreadSleepInterval());
-
-            intervalBackupStatusValidator.GetBackupValidation();
+            //how to know if the status is definitely invalid?
+//            IntervalBackupStatusValidator intervalBackupStatusValidator = 
+//                new IntervalBackupStatusValidator("not found", 60, 5, 
+//                    new RestfulGetBackupStatus(
+//                        new BackupSettings
+//                            {
+//
+//                            }), 
+//                    new ThreadSleepInterval());
+//
+//            intervalBackupStatusValidator.GetBackupValidation();
 
 //            HandledBackupRequest handledBackupRequest = new HandledBackupRequest
 //            (
