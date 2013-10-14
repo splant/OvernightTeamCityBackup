@@ -16,27 +16,36 @@ namespace TeamCityBackupTask
 
         public string GetBackupStatus()
         {
+            var client = new HttpClient();
+            var overallRequestTask = client
+                        .SendAsync(GetBackupStatusRequestMessage())
+                        .ContinueWith(requestMessageTask =>
+                        {
+                            requestMessageTask.Result.EnsureSuccessStatusCode();
+                            var response = requestMessageTask.Result;
+
+                            var statusTask = response.Content.ReadAsStringAsync();
+                            statusTask.Wait();
+
+                            return statusTask.Result;
+                        });
+
+            overallRequestTask.Wait();
+
+            return overallRequestTask.Result;
+        }
+
+        private HttpRequestMessage GetBackupStatusRequestMessage()
+        {
             var message = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(_backupSettings.BackupStatusUri),
-            };
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri(_backupSettings.BackupStatusUri),
+                };
 
             AddBasicAuthorizationHeader(message);
 
-            var client = new HttpClient();
-            var task = client.SendAsync(message).ContinueWith(taskWithMsg =>
-                {
-                    taskWithMsg.Result.EnsureSuccessStatusCode();
-                    var response = taskWithMsg.Result;
-
-                    var stringTask = response.Content.ReadAsStringAsync();
-                    stringTask.Wait();
-                    return stringTask.Result;
-                });
-
-            task.Wait();
-            return task.Result;
+            return message;
         }
 
         private void AddBasicAuthorizationHeader(HttpRequestMessage message)
