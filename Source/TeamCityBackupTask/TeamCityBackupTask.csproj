@@ -92,6 +92,7 @@
     <Compile Include="RestfulGetBackupStatus.cs" />
     <Compile Include="RestfulPostBackupRequest.cs" />
     <Compile Include="StorageFailed.cs" />
+    <Compile Include="TeamCityBackupFileDatesQuery.cs" />
     <Compile Include="ThreadSleepInterval.cs" />
     <Compile Include="ValidatedBackupProcess.cs" />
     <Compile Include="WindowsFileSystem.cs" />
