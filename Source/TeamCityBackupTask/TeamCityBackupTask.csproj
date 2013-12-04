@@ -78,6 +78,7 @@
     <Compile Include="BackupStorage.cs" />
     <Compile Include="BackupValidationRecord.cs" />
     <Compile Include="BackupValidator.cs" />
+    <Compile Include="CompositeBackupValidators.cs" />
     <Compile Include="CurrentDateProvider.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="FrameworkCurrentDateProvider.cs" />

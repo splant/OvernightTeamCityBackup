@@ -34,7 +34,7 @@ namespace TeamCityBackupTask
 
             return new IntervalBackupStatusValidator(
                 _requestedStatus, reducedTimeToWait, _secondsInterval, _httpBackupStatus, _intervalHandler)
-                .GetBackupValidation();
+                    .GetBackupValidation();
         }
     }
 }
