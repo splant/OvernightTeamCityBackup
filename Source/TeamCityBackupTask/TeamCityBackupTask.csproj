@@ -80,6 +80,7 @@
     <Compile Include="BackupValidator.cs" />
     <Compile Include="CompositeBackupValidators.cs" />
     <Compile Include="CurrentDateProvider.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="FrameworkCurrentDateProvider.cs" />
     <Compile Include="HttpBackupRequest.cs" />

@@ -7,5 +7,6 @@
         public string BackupRequestUser { get; set; }
         public string BackupRequestPassword { get; set; }
         public string BackupFilesLocation { get; set; }
+        public string BackupTargetDestination { get; set; }
     }
 }
