@@ -46,11 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupControllerTests.cs" />
-    <Compile Include="BackupExistsValidator.cs" />
+    <Compile Include="BackupExistsValidatorTests.cs" />
     <Compile Include="BackupFinishedValidatorTests.cs" />
     <Compile Include="BackupStartedValidatorTests.cs" />
     <Compile Include="CompositeBackupValidatorsTests.cs" />
     <Compile Include="CopyLatestBackupStorageTaskTests.cs" />
+    <Compile Include="GetLatestBackupNameQueryTests.cs" />
     <Compile Include="IntervalBackupStatusValidatorTests.cs" />
     <Compile Include="HttpRestBackupRequestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

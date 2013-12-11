@@ -47,9 +47,9 @@ namespace UnitTests
             //Given:
             var possibleFileDates = new[]
                 {
-                    new DateTime(2011, 12, 10, 12, 12, 45),
-                    new DateTime(2011, 11, 10, 06, 45, 34),
-                    new DateTime(2011, 12, 10, 04, 09, 01),
+                    new BackupFileWithDateStamp("", new DateTime(2011, 12, 10, 12, 12, 45)),
+                    new BackupFileWithDateStamp("", new DateTime(2011, 11, 10, 06, 45, 34)),
+                    new BackupFileWithDateStamp("", new DateTime(2011, 12, 10, 04, 09, 01))
                 };
             A.CallTo(() => _currentDateProvider.Now).Returns(new DateTime(2011, 12, 10, 13, 49, 12));
             A.CallTo(() => _backupFileDatesQuery.GetDates(A<IEnumerable<string>>._)).Returns(possibleFileDates);
@@ -67,9 +67,9 @@ namespace UnitTests
             //Given:
             var possibleFileDates = new[]
                 {
-                    new DateTime(2011, 12, 10, 11, 12, 45),
-                    new DateTime(2011, 11, 10, 06, 45, 34),
-                    new DateTime(2011, 12, 10, 04, 09, 01),
+                    new BackupFileWithDateStamp("", new DateTime(2011, 12, 10, 11, 12, 45)),
+                    new BackupFileWithDateStamp("", new DateTime(2011, 11, 10, 06, 45, 34)),
+                    new BackupFileWithDateStamp("", new DateTime(2011, 12, 10, 04, 09, 01))
                 };
             A.CallTo(() => _currentDateProvider.Now).Returns(new DateTime(2011, 12, 10, 13, 49, 12));
             A.CallTo(() => _backupFileDatesQuery.GetDates(A<IEnumerable<string>>._)).Returns(possibleFileDates);

@@ -6,7 +6,7 @@ namespace TeamCityBackupTask
 {
     public class TeamCityBackupFileDatesQuery : BackupFileDatesQuery 
     {
-        public IEnumerable<DateTime> GetDates(IEnumerable<string> backupFileNames)
+        public IEnumerable<BackupFileWithDateStamp> GetDates(IEnumerable<string> backupFileNames)
         {
             foreach (var backupFileName in backupFileNames)
             {
@@ -17,7 +17,7 @@ namespace TeamCityBackupTask
                                                              CultureInfo.InvariantCulture, DateTimeStyles.None, out backupFileDate);
 
                 if (isValidDateTime)
-                    yield return backupFileDate;
+                    yield return new BackupFileWithDateStamp(backupFileName, backupFileDate);
             }
         }
 

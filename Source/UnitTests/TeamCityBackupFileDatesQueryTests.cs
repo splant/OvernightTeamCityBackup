@@ -25,7 +25,9 @@ namespace UnitTests
             var backupDateTimes = teamCityBackupFileDatesQuery.GetDates(new[] { fileName });
 
             //Then:
-            Assert.That(backupDateTimes, Contains.Item(expectedBackupDate));
+            Assert.That(backupDateTimes.Any(backupFileWithDateStamp => 
+                                            backupFileWithDateStamp.BackupDateTime == expectedBackupDate &&
+                                            backupFileWithDateStamp.BackupFileName == fileName));
         }
     }
     
@@ -57,11 +59,11 @@ namespace UnitTests
             TeamCityBackupFileDatesQuery teamCityBackupFileDatesQuery = GetSUT();
 
             //When:
-            var backupDateTimes = teamCityBackupFileDatesQuery.GetDates(fileNames);
+            var backupDateTimes = teamCityBackupFileDatesQuery.GetDates(fileNames).ToList();
 
             //Then:
             foreach (var expectedBackupDate in expectedBackupDates)
-                Assert.That(backupDateTimes, Contains.Item(expectedBackupDate));
+                Assert.That(backupDateTimes.Any(b => b.BackupDateTime == expectedBackupDate));
 
             Assert.That(backupDateTimes.Count(), Is.EqualTo(expectedBackupDates.Count()));
         }

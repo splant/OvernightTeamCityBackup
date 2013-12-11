@@ -33,9 +33,10 @@ namespace TeamCityBackupTask
             return BackupValidationRecord.Invalid("No backup file created within the last two hours was found");
         }
 
-        private Func<DateTime, bool> OccurredWithinTheLastTwoHours()
+        private Func<BackupFileWithDateStamp, bool> OccurredWithinTheLastTwoHours()
         {
-            return dateTime => (_currentDateProvider.Now - dateTime).TotalHours < 2;
+            return backupFileWithDateStamp => 
+                (_currentDateProvider.Now - backupFileWithDateStamp.BackupDateTime).TotalHours < 2;
         }
     }
 }
