@@ -24,7 +24,7 @@ namespace TeamCityBackupTask
             var lastBackupFile = TryGetLastBackupFile();
             var fileNameSegment = lastBackupFile.Substring(lastBackupFile.LastIndexOf('\\') + 1);
 
-            TryCopyBackupFile(lastBackupFile, fileNameSegment); 
+            TryMoveBackupFile(lastBackupFile, fileNameSegment); 
         }
 
         private string TryGetLastBackupFile()
@@ -37,11 +37,11 @@ namespace TeamCityBackupTask
             return lastBackupFile;
         }
 
-        private void TryCopyBackupFile(string lastBackupFile, string fileNameSegment)
+        private void TryMoveBackupFile(string lastBackupFile, string fileNameSegment)
         {
             try
             {
-                _fileSystem.CopyFile(lastBackupFile,
+                _fileSystem.CutFile(lastBackupFile,
                                      Path.Combine(_backupSettings.BackupTargetDestination, fileNameSegment));
             }
             catch (Exception exception)

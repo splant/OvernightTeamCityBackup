@@ -1,56 +1,71 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 
 namespace TeamCityBackupTask
 {
     class Program
     {
+        private const int ONE_MINUTE_DURATION = 60;
+        private const int THIRTY_MINUTE_DURATION = 1800;
+        private const int FIVE_SECOND_INTERVAL = 5;
+        private const int THIRTY_SECOND_INTERVAL = 30;
+
         static void Main(string[] args)
         {
-            WindowsFileSystem windowsFileSystem = new WindowsFileSystem();
-            var list = windowsFileSystem.GetFileNames(@"").ToList();
-
-            //how to know if the status is definitely invalid?
-//            IntervalBackupStatusValidator intervalBackupStatusValidator = 
-//                new IntervalBackupStatusValidator("not found", 60, 5, 
-//                    new RestfulGetBackupStatus(
-//                        new BackupSettings
-//                            {
-//
-//                            }), 
-//                    new ThreadSleepInterval());
-//
-//            intervalBackupStatusValidator.GetBackupValidation();
-
-//            HandledBackupRequest handledBackupRequest = new HandledBackupRequest
-//            (
-//                new BackupSettings
-//                    {
-//                        BackupRequestUri = GetAppSetting("BackupRequestUri"),
-//
-//                    }, 
-//                new RestfulPostBackupRequest()
-//            );
-//
-//            handledBackupRequest.RequestBackup();
+            BackupController backupController = BuildBackupController();
+            backupController.Backup();
 
             Console.ReadKey();
         }
 
-        private static string GetAppSetting(string appSettingName)
+        public static BackupController BuildBackupController()
         {
-            return ConfigurationManager.AppSettings[appSettingName];
-        }
-    }
+            BackupSettings applicationBackupSettings = new BackupSettings
+                {
+                    BackupRequestUri = GetApplicationSetting<string>("BackupRequestUri"),
+                    BackupStatusUri = GetApplicationSetting<string>("BackupStatusUri"),
+                    BackupFilesLocation = GetApplicationSetting<string>("BackupFilesLocation"),
+                    BackupTargetDestination = GetApplicationSetting<string>("BackupTargetDestination"),
+                    BackupRequestUser = GetApplicationSetting<string>("BackupRequestUser"),
+                    BackupRequestPassword = GetApplicationSetting<string>("BackupRequestPassword"),
+                };
 
-    public class StubHttpbackupStatus : HttpBackupStatus
-    {
-        public string GetBackupStatus()
+            HttpBackupRequest httpBackupRequest = new RestfulPostBackupRequest();
+            BackupRequest backupRequest = new HandledBackupRequest(applicationBackupSettings, httpBackupRequest);
+
+            IntervalHandler intervalHandler = new ThreadSleepInterval();
+            HttpBackupStatus httpBackupStatus = new RestfulGetBackupStatus(applicationBackupSettings);
+            FileSystem fileSystem = new WindowsFileSystem();
+            BackupFileDatesQuery backupFileDatesQuery = new TeamCityBackupFileDatesQuery();
+            CurrentDateProvider currentDateProvider = new FrameworkCurrentDateProvider();
+
+            BackupValidator compositeBackupValidators = new CompositeBackupValidators(new BackupValidator[]
+                {
+                    new BackupStartedValidator(
+                        ONE_MINUTE_DURATION, FIVE_SECOND_INTERVAL, httpBackupStatus, intervalHandler), 
+                    new BackupFinishedValidator(
+                        THIRTY_MINUTE_DURATION, THIRTY_SECOND_INTERVAL, httpBackupStatus, intervalHandler),
+                    new BackupExistsValidator(
+                        applicationBackupSettings, fileSystem, backupFileDatesQuery, currentDateProvider) 
+                });
+
+            BackupProcess backupProcess = new ValidatedBackupProcess(backupRequest, compositeBackupValidators);
+
+            LatestRecentBackupQuery latestRecentBackupQuery = new GetLatestBackupNameQuery(
+                applicationBackupSettings, fileSystem, backupFileDatesQuery);
+
+            BackupStorage backupStorage = new CopyLatestBackupStorageTask(
+                latestRecentBackupQuery, fileSystem, applicationBackupSettings);
+
+            BackupNotifier backupNotifier = new LocalLogFileNotifier();
+
+            return new BackupController(backupProcess, backupStorage, backupNotifier);
+        }
+
+        public static T GetApplicationSetting<T>(string settingName)
         {
-            return "Something else";
+            object value = ConfigurationManager.AppSettings[settingName]; 
+            return (T)Convert.ChangeType(value, typeof(T));
         }
     }
 }

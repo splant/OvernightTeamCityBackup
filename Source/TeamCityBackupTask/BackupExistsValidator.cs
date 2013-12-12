@@ -25,9 +25,9 @@ namespace TeamCityBackupTask
         public BackupValidationRecord GetBackupValidation()
         {
             var backupFileNames = _fileSystem.GetFileNames(_backupSettings.BackupFilesLocation);
-            var dateTimes = _backupFileDatesQuery.GetDates(backupFileNames);
+            var backupFileDateTimeStamps = _backupFileDatesQuery.GetDates(backupFileNames);
 
-            if (dateTimes.Any(OccurredWithinTheLastTwoHours())) 
+            if (backupFileDateTimeStamps.Any(OccurredWithinTheLastTwoHours())) 
                 return BackupValidationRecord.Valid();
 
             return BackupValidationRecord.Invalid("No backup file created within the last two hours was found");

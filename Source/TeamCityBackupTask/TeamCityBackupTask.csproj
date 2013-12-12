@@ -91,6 +91,7 @@
     <Compile Include="IntervalBackupStatusValidator.cs" />
     <Compile Include="IntervalHandler.cs" />
     <Compile Include="LatestRecentBackupQuery.cs" />
+    <Compile Include="LocalLogFileNotifier.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

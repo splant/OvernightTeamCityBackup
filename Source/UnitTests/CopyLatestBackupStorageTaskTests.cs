@@ -31,7 +31,7 @@ namespace UnitTests
         }
         
         [Test]
-        public void We_ask_the_file_system_to_copy_the_backup_file_to_a_location_specified_in_the_backup_settings()
+        public void We_ask_the_file_system_to_cut_the_backup_file_to_a_location_specified_in_the_backup_settings()
         {
             //Given:
             CopyLatestBackupStorageTask copyLatestBackupStorageTask = GetSUT();
@@ -40,7 +40,7 @@ namespace UnitTests
             copyLatestBackupStorageTask.StoreBackup();
 
             //Then:
-            A.CallTo(() => _fileSystem.CopyFile(
+            A.CallTo(() => _fileSystem.CutFile(
                 _recentBackupFileName, A<string>.That.Contains(_defaultSettings.BackupTargetDestination)))
              .MustHaveHappened();
         }
@@ -64,12 +64,12 @@ namespace UnitTests
             copyLatestBackupStorageTask.StoreBackup();
 
             //Then:
-            A.CallTo(() => _fileSystem.CopyFile(latestBackupFilePath, expectedDestinationFilePath))
+            A.CallTo(() => _fileSystem.CutFile(latestBackupFilePath, expectedDestinationFilePath))
              .MustHaveHappened();
         }
 
         [TestFixture]
-        public class Given_a_problem_is_encountered_while_copying_the_backup_file : Given_a_recent_backup_exists
+        public class Given_a_problem_is_encountered_while_cutting_the_backup_file : Given_a_recent_backup_exists
         {
             public object[] ExceptionTestCases = new object[]
             {
@@ -84,7 +84,7 @@ namespace UnitTests
                 //Given:
                 CopyLatestBackupStorageTask copyLatestBackupStorageTask = GetSUT();
 
-                A.CallTo(() => _fileSystem.CopyFile(A<string>._, A<string>._)).Throws(copyingException);
+                A.CallTo(() => _fileSystem.CutFile(A<string>._, A<string>._)).Throws(copyingException);
 
                 //When:
                 TestDelegate storingBackup = () => copyLatestBackupStorageTask.StoreBackup();

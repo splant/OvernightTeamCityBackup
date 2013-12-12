@@ -10,9 +10,9 @@ namespace TeamCityBackupTask
             return Directory.GetFiles(directory);
         }
 
-        public void CopyFile(string sourceFile, string destinationFile)
+        public void CutFile(string sourceFile, string destinationFile)
         {
-            File.Copy(sourceFile, destinationFile);
+            File.Move(sourceFile, destinationFile);
         }
     }
 }
