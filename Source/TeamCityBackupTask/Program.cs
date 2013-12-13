@@ -6,12 +6,15 @@ namespace TeamCityBackupTask
     class Program
     {
         private const int ONE_MINUTE_DURATION = 60;
-        private const int ONE_HOUR_DURATION = 3600;
         private const int FIVE_SECOND_INTERVAL = 5;
         private const int THIRTY_SECOND_INTERVAL = 30;
 
+        private static int _timeBackupAllowedToTake;
+
         static void Main(string[] args)
         {
+            _timeBackupAllowedToTake = GetApplicationSetting<int>("TotalAllowedBackupTimeInSeconds");
+            
             BackupController backupController = BuildBackupController();
             backupController.Backup();
         }
@@ -42,7 +45,7 @@ namespace TeamCityBackupTask
                     new BackupStartedValidator(
                         ONE_MINUTE_DURATION, FIVE_SECOND_INTERVAL, httpBackupStatus, intervalHandler), 
                     new BackupFinishedValidator(
-                        ONE_HOUR_DURATION, THIRTY_SECOND_INTERVAL, httpBackupStatus, intervalHandler),
+                        _timeBackupAllowedToTake, THIRTY_SECOND_INTERVAL, httpBackupStatus, intervalHandler),
                     new BackupExistsValidator(
                         applicationBackupSettings, fileSystem, backupFileDatesQuery, currentDateProvider) 
                 });
