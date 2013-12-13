@@ -68,6 +68,26 @@ namespace UnitTests
             Assert.That(backupDateTimes.Count(), Is.EqualTo(expectedBackupDates.Count()));
         }
     }
+
+    [TestFixture]
+    public class Given_the_file_names_include_a_full_path : TeamCityBackupFileDatesQueryTestBase
+    {
+        [TestCase("C:\\sample\\path\\TeamCity_Backup_20131121_165032.zip")]
+        [TestCase("a\\path\\of\\sorts\\TeamCity_Backup_20110323_103232.zip")]
+        [TestCase("F:\\TeamCity_Backup_20091230_065900.zip")]
+        public void Then_this_path_is_handled_correctly(string fileNameWithFullPaths)
+        {
+            //Given:
+
+            TeamCityBackupFileDatesQuery teamCityBackupFileDatesQuery = GetSUT();
+
+            //When:
+            var backupFileWithDateStamps = teamCityBackupFileDatesQuery.GetDates(new[]{ fileNameWithFullPaths });
+
+            //Then:
+            Assert.That(backupFileWithDateStamps.Any(b => b.BackupFileName == fileNameWithFullPaths));
+        }
+    }
     
     [TestFixture]
     public class Given_an_invalid_team_city_backup_file_name : TeamCityBackupFileDatesQueryTestBase

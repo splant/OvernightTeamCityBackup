@@ -10,7 +10,8 @@ namespace TeamCityBackupTask
         {
             foreach (var backupFileName in backupFileNames)
             {
-                var isoFormattedDate = GetIsoFormattedDate(backupFileName);
+                var fileSegmentOnly = backupFileName.Substring(backupFileName.LastIndexOf('\\') + 1);
+                var isoFormattedDate = GetIsoFormattedDate(fileSegmentOnly);
 
                 DateTime backupFileDate;
                 var isValidDateTime = DateTime.TryParseExact(isoFormattedDate, "yyyy-MM-dd'T'HH:mm:ss", 
