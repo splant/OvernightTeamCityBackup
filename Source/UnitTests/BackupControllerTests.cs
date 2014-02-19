@@ -1,4 +1,5 @@
 ﻿using FakeItEasy;
+using FakeItEasy.Configuration;
 using NUnit.Framework;
 using TeamCityBackupTask;
 
@@ -49,6 +50,31 @@ namespace UnitTests
                 {
                     A.CallTo(() => _backupProcess.ExecuteBackup()).MustHaveHappened();
                     A.CallTo(() => _backupStorage.StoreBackup()).MustHaveHappened();
+                }
+            }
+        } 
+    }
+
+    [TestFixture]
+    public class Given_the_backup_was_processed_and_stored_successfully : BackupControllerTestBase
+    {
+        [Test]
+        public void Then_the_backup_cleanup_task_is_run_afterwards()
+        {
+            //Given:
+            BackupController backupController = GetSUT();
+            
+            using (var scope = Fake.CreateScope())
+            {
+                //When:
+                backupController.Backup();
+
+                //Then:
+                using (scope.OrderedAssertions())
+                {
+                    A.CallTo(() => _backupProcess.ExecuteBackup()).MustHaveHappened();
+                    A.CallTo(() => _backupStorage.StoreBackup()).MustHaveHappened();
+                    A.CallTo(() => _backupCleanUp.DoCleanUp()).MustHaveHappened();
                 }
             }
         }
@@ -132,18 +158,20 @@ namespace UnitTests
         protected BackupProcess _backupProcess;
         protected BackupStorage _backupStorage;
         protected BackupNotifier _backupNotifier;
+        protected BackupCleanUp _backupCleanUp;
 
         [SetUp]
-        public void Setup()
+        public virtual void Setup()
         {
             _backupProcess = A.Fake<BackupProcess>();
             _backupStorage = A.Fake<BackupStorage>();
             _backupNotifier = A.Fake<BackupNotifier>();
+            _backupCleanUp = A.Fake<BackupCleanUp>();
         }
 
         public BackupController GetSUT()
         {
-            return new BackupController(_backupProcess, _backupStorage, _backupNotifier);
+            return new BackupController(_backupProcess, _backupStorage, _backupCleanUp, _backupNotifier);
         }
     }
 }

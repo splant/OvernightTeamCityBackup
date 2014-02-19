@@ -8,5 +8,6 @@
         public string BackupRequestPassword { get; set; }
         public string BackupFilesLocation { get; set; }
         public string BackupTargetDestination { get; set; }
+        public int NumberOfBackupsToKeep { get; set; }
     }
 }

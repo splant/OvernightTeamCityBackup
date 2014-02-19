@@ -14,5 +14,10 @@ namespace TeamCityBackupTask
         {
             File.Move(sourceFile, destinationFile);
         }
+
+        public void RemoveFile(string fileName)
+        {
+            File.Delete(fileName);
+        }
     }
 }

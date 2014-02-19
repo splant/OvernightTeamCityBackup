@@ -29,7 +29,10 @@ namespace TeamCityBackupTask
                     BackupTargetDestination = GetApplicationSetting<string>("BackupTargetDestination"),
                     BackupRequestUser = GetApplicationSetting<string>("BackupRequestUser"),
                     BackupRequestPassword = GetApplicationSetting<string>("BackupRequestPassword"),
+                    NumberOfBackupsToKeep = GetApplicationSetting<int>("NumberOfBackupsToKeep"),
                 };
+
+            BackupNotifier backupNotifier = new LocalLogFileNotifier();
 
             HttpBackupRequest httpBackupRequest = new RestfulPostBackupRequest();
             BackupRequest backupRequest = new HandledBackupRequest(applicationBackupSettings, httpBackupRequest);
@@ -58,9 +61,10 @@ namespace TeamCityBackupTask
             BackupStorage backupStorage = new CopyLatestBackupStorageTask(
                 latestRecentBackupQuery, fileSystem, applicationBackupSettings);
 
-            BackupNotifier backupNotifier = new LocalLogFileNotifier();
+            BackupCleanUp backupCleanUp = new CleanUpOldDatabaseBackupsTask(
+                fileSystem, backupFileDatesQuery, applicationBackupSettings, backupNotifier);
 
-            return new BackupController(backupProcess, backupStorage, backupNotifier);
+            return new BackupController(backupProcess, backupStorage, backupCleanUp, backupNotifier);
         }
 
         public static T GetApplicationSetting<T>(string settingName)

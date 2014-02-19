@@ -25,8 +25,9 @@ namespace TeamCityBackupTask
                 return BackupValidationRecord.Valid();
 
             if (_secondsToWait <= 0)
-                return BackupValidationRecord.Invalid(
-                    string.Format("No backup with state: {0} was found", _requestedStatus));
+                return BackupValidationRecord.Invalid(string.Format(
+                    "No backup with requested state: {0} was found in the elapsed allowed backup period", 
+                    _requestedStatus));
 
             _intervalHandler.WaitInterval(_secondsInterval);
 

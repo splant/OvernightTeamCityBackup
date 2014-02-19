@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackupCleanUp.cs" />
     <Compile Include="BackupController.cs" />
     <Compile Include="BackupExistsValidator.cs" />
     <Compile Include="BackupFailed.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="BackupStorage.cs" />
     <Compile Include="BackupValidationRecord.cs" />
     <Compile Include="BackupValidator.cs" />
+    <Compile Include="CleanUpOldDatabaseBackupsTask.cs" />
     <Compile Include="CompositeBackupValidators.cs" />
     <Compile Include="CopyLatestBackupStorageTask.cs" />
     <Compile Include="CurrentDateProvider.cs" />
@@ -104,7 +106,9 @@
     <Compile Include="WindowsFileSystem.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

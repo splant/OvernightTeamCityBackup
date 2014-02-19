@@ -6,5 +6,6 @@ namespace TeamCityBackupTask
     {
         IEnumerable<string> GetFileNames(string directory);
         void CutFile(string sourceFile, string destinationFile);
+        void RemoveFile(string fileName);
     }
 }

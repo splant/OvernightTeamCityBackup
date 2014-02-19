@@ -77,7 +77,7 @@ namespace UnitTests
             //Then:
             Assert.That(validationRecord.IsValid, Is.False);
             Assert.That(validationRecord.Message, Contains.Substring(
-                string.Format("No backup with state: {0} was found", requestedStatus)));
+                string.Format("No backup with requested state: {0} was found", requestedStatus)));
         }
     }
 

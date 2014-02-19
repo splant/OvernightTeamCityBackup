@@ -4,13 +4,18 @@
     {
         private readonly BackupProcess _backupProcess;
         private readonly BackupStorage _backupStorage;
+        private readonly BackupCleanUp _backupCleanUp;
         private readonly BackupNotifier _backupNotifier;
 
         public BackupController(
-            BackupProcess backupProcess, BackupStorage backupStorage, BackupNotifier backupNotifier)
+            BackupProcess backupProcess, 
+            BackupStorage backupStorage, 
+            BackupCleanUp backupCleanUp, 
+            BackupNotifier backupNotifier)
         {
             _backupProcess = backupProcess;
             _backupStorage = backupStorage;
+            _backupCleanUp = backupCleanUp;
             _backupNotifier = backupNotifier;
         }
 
@@ -34,6 +39,7 @@
         {
             _backupProcess.ExecuteBackup();
             _backupStorage.StoreBackup();
+            _backupCleanUp.DoCleanUp();
             _backupNotifier.SendNotification("Backup was a success");
         }
     }

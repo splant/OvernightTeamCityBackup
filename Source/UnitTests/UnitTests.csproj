@@ -49,6 +49,7 @@
     <Compile Include="BackupExistsValidatorTests.cs" />
     <Compile Include="BackupFinishedValidatorTests.cs" />
     <Compile Include="BackupStartedValidatorTests.cs" />
+    <Compile Include="CleanUpOldDatabaseBackupsTaskTests.cs" />
     <Compile Include="CompositeBackupValidatorsTests.cs" />
     <Compile Include="CopyLatestBackupStorageTaskTests.cs" />
     <Compile Include="GetLatestBackupNameQueryTests.cs" />
